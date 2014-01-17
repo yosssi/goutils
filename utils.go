@@ -38,7 +38,7 @@ func GetUrls(s string) []string {
 }
 
 func NormalUrl(s string) string {
-	output, err := gocmd.Pipe(exec.Command("curl", "-sLI", s), exec.Command("grep", "location:"), exec.Command("tail", "-1"))
+	output, err := gocmd.Pipe(exec.Command("curl", "-sLI", s), exec.Command("grep", "-E", "Location:|location:"), exec.Command("tail", "-1"))
 	if err != nil {
 		panic(err)
 	}
@@ -46,7 +46,7 @@ func NormalUrl(s string) string {
 	if result == "" {
 		result = s
 	} else {
-		result = strings.TrimSpace(strings.TrimPrefix(result, "location: "))
+		result = strings.TrimSpace(strings.TrimPrefix(strings.TrimPrefix(result, "location: "), "Location: "))
 	}
 	return result
 }

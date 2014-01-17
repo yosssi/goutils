@@ -89,8 +89,8 @@ func TestNormalUrl(t *testing.T) {
 		t.Error("urls is invalid.")
 	}
 
-	url = NormalUrl("http://google.com")
-	if url != "http://google.com" {
+	url = NormalUrl("http://www.google.co.jp/")
+	if url != "http://www.google.co.jp/" {
 		t.Error("urls is invalid.")
 	}
 }
