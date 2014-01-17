@@ -1,6 +1,7 @@
 package goutils
 
 import (
+	"fmt"
 	"github.com/yosssi/gocmd"
 	"os/exec"
 	"reflect"
@@ -40,7 +41,8 @@ func GetUrls(s string) []string {
 func NormalUrl(s string) string {
 	output, err := gocmd.Pipe(exec.Command("curl", "-sLI", s), exec.Command("grep", "-E", "Location:|location:"), exec.Command("tail", "-1"))
 	if err != nil {
-		panic(err)
+		fmt.Println(err.Error())
+		return ""
 	}
 	result := string(output)
 	if result == "" {
