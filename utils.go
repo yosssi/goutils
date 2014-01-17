@@ -31,7 +31,7 @@ func GetUrls(s string) []string {
 	tokens := strings.Split(s, " ")
 	for _, t := range tokens {
 		if strings.HasPrefix(t, urlPrefixHttp) || strings.HasPrefix(t, urlPrefixHttps) {
-			urls = append(urls, NormalUrl(t))
+			urls = append(urls, t)
 		}
 	}
 	return urls
