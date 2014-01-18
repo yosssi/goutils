@@ -57,6 +57,15 @@ func RemoveHash(s string) string {
 	return strings.Split(s, "#")[0]
 }
 
+func RemoveTwitterUrlHash(s string) string {
+	tokens := strings.Split(s, "#")
+	if len(tokens) > 1 && strings.HasPrefix(tokens[1], ".") && strings.HasSuffix(tokens[1], ".twitter") {
+		return tokens[0]
+	} else {
+		return s
+	}
+}
+
 func RemoveUtmParams(s string) string {
 	urlTokens := strings.Split(s, "?")
 	params := make([]string, 0)

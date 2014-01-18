@@ -109,6 +109,26 @@ func TestRemoveHash(t *testing.T) {
 	}
 }
 
+func TestRemoveTwitterUrlHash(t *testing.T) {
+	urlOrig := "http://google.com"
+	urlResult := RemoveTwitterUrlHash(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com#hash"
+	urlResult = RemoveTwitterUrlHash(urlOrig)
+	if urlResult != "http://google.com#hash" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com#.XXXX.twitter"
+	urlResult = RemoveTwitterUrlHash(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+}
+
 func TestRemoveUtmParams(t *testing.T) {
 	urlOrig := "http://google.com"
 	urlResult := RemoveUtmParams(urlOrig)
