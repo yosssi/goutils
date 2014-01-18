@@ -52,3 +52,25 @@ func NormalUrl(s string) string {
 	}
 	return result
 }
+
+func RemoveHash(s string) string {
+	return strings.Split(s, "#")[0]
+}
+
+func RemoveUtmParams(s string) string {
+	urlTokens := strings.Split(s, "?")
+	params := make([]string, 0)
+	if len(urlTokens) > 1 {
+		for _, param := range strings.Split(urlTokens[1], "&") {
+			if !strings.HasPrefix(param, "utm") {
+				params = append(params, param)
+			}
+		}
+	}
+
+	url := urlTokens[0]
+	if len(params) > 0 {
+		url += "?" + strings.Join(params, "&")
+	}
+	return url
+}

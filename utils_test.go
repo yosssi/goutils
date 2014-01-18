@@ -94,3 +94,61 @@ func TestNormalUrl(t *testing.T) {
 		t.Error("urls is invalid.")
 	}
 }
+
+func TestRemoveHash(t *testing.T) {
+	urlOrig := "http://google.com"
+	urlResult := RemoveHash(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com#hash"
+	urlResult = RemoveHash(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+}
+
+func TestRemoveUtmParams(t *testing.T) {
+	urlOrig := "http://google.com"
+	urlResult := RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com?key=val"
+	urlResult = RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com?key=val" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com?utm_content=aaa"
+	urlResult = RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com?key=val&key2=val2"
+	urlResult = RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com?key=val&key2=val2" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com?key=val&utm_content=aaa"
+	urlResult = RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com?key=val" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com?utm_content=aaa&key=val"
+	urlResult = RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com?key=val" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+
+	urlOrig = "http://google.com?utm_content=aaa&utm_medium=bbb"
+	urlResult = RemoveUtmParams(urlOrig)
+	if urlResult != "http://google.com" {
+		t.Error("url is invalid.", urlOrig, urlResult)
+	}
+}
