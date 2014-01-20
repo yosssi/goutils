@@ -2,8 +2,7 @@ package goutils
 
 import (
 	"fmt"
-	"github.com/yosssi/gocmd"
-	"os/exec"
+	"net/http"
 	"reflect"
 	"strings"
 )
@@ -39,18 +38,12 @@ func GetUrls(s string) []string {
 }
 
 func NormalUrl(s string) string {
-	output, err := gocmd.Pipe(exec.Command("curl", "-sLI", s), exec.Command("grep", "-E", "Location:|location:"), exec.Command("tail", "-1"))
+	res, err := http.Get(s)
 	if err != nil {
 		fmt.Println(err.Error())
 		return ""
 	}
-	result := string(output)
-	if result == "" {
-		result = s
-	} else {
-		result = strings.TrimSpace(strings.TrimPrefix(strings.TrimPrefix(result, "location: "), "Location: "))
-	}
-	return result
+	return res.Request.URL.String()
 }
 
 func RemoveHash(s string) string {
