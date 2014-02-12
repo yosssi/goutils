@@ -5,3 +5,5 @@ go:
   - tip
 script:
   - go test -v ./...
+git:
+  depth: 1
